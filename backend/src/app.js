@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -57,9 +57,9 @@ app.use(auth);
 
 app.use(indexRouter);
 
-app.use(errors());
-
 app.use(errorLogger); // подключаем логгер ошибок
+
+app.use(errors());
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
