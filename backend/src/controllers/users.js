@@ -9,7 +9,7 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-err.js');
 const ConflictError = require('../errors/conflict-err');
 
-const JWT_SECRET = 'yandex.praktikum19';
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const getUsers = (req, res, next) => {
   User.find({})
@@ -77,7 +77,7 @@ const login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
       res
         .cookie('jwt', token, {
           httpOnly: true,

@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../errors/authorized-err.js');
 
-const JWT_SECRET = 'yandex.praktikum19';
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 function getcookie(req) {
   const { cookie } = req.headers;
@@ -29,7 +29,7 @@ module.exports = (req, res, next) => {
     let payload;
 
     try {
-      payload = jwt.verify(token, JWT_SECRET);
+      payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
     } catch (err) {
       throw new UnauthorizedError('Ошибка авторизации');
     }

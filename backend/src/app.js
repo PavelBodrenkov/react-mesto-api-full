@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
+const dotenv = require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const { celebrate, Joi } = require('celebrate');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger.js');
@@ -12,7 +12,6 @@ const indexRouter = require('./routes/indexRouter');
 const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/users');
 
-dotenv.config();
 const { PORT = 3000 } = process.env;
 const app = express();
 
