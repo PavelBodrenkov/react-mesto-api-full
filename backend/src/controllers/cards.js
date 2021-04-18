@@ -1,6 +1,6 @@
 const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-err.js');
-const BadRequestError = require('../errors/bad-request-err.js');
+const ForbiddenError = require('../errors/forbidden-err.js');
 
 const getCards = (req, res, next) => {
   Card.find({})
@@ -23,7 +23,7 @@ const deleteCard = (req, res, next) => {
         card.remove();
         res.status(200).send({ message: 'Карточка удалена' });
       }
-      throw new BadRequestError('Нельзя удалять чужие карточки');
+      throw new ForbiddenError('Нельзя удалять чужие карточки');
     })
     .catch(next);
 };
